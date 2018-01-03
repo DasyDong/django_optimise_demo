@@ -20,11 +20,16 @@ class Hasher(object):
         
     @classmethod
     def parse_hash(cls, obj_hash):
-        base36 = basehash.base36()
-        unhashed = '%09d' % base36.unhash(obj_hash)
-        contenttype_pk = int(unhashed[:-6])
-        object_pk = int(unhashed[-6:])
-        return contenttype_pk, object_pk
+        try:
+            base36 = basehash.base36(length=len(obj_hash))
+            unhashed = '%09d' % base36.unhash(obj_hash)
+            contenttype_pk = int(unhashed[:-6])
+            object_pk = int(unhashed[-6:])
+        except Exception as e:
+            print e.message
+            raise e
+        else:
+            return contenttype_pk, object_pk
 
     @classmethod
     def to_object_pk(cls, obj_hash):

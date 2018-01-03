@@ -19,3 +19,45 @@ class HouseSerializer(serializers.ModelSerializer):
             'sq_meters',
             'price'
         )
+
+
+class HousePlainSerializer(object):
+
+    """
+
+    Serializes a House queryset consisting of dicts with
+
+    the following keys: 'id', 'address', 'country',
+
+    'sq_meters', 'price'.
+
+    """
+
+
+    @staticmethod
+
+    def serialize_data(queryset):
+
+        """
+
+        Return a list of hashed objects from the given queryset.
+
+        """
+
+        return [
+
+            {
+
+                'id': entry.hash,
+
+                'address': entry.address,
+
+                'country': entry.country.hash,
+
+                'sq_meters': entry.sq_meters,
+
+                'price': entry.price
+
+            } for entry in queryset
+
+        ]
