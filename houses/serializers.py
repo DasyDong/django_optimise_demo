@@ -7,8 +7,8 @@ from utils.hash import Hasher
 class HouseSerializer(serializers.ModelSerializer):
     """Serialize a `houses.House` instance."""
 
-    id = serializers.ReadOnlyField(source="hash")
-    country = serializers.ReadOnlyField(source="country.hash")
+    id = serializers.IntegerField(source="hash", read_only=True)
+    country = serializers.IntegerField(source="country.hash", read_only=True)
 
     class Meta:
         model = House
