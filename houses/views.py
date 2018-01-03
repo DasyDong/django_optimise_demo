@@ -13,15 +13,19 @@ class HouseListAPIView(ListAPIView):
     country = None
 
     def get_queryset(self):
-        country = get_object_or_404(Country, pk=self.country)
-        queryset = self.model.objects.filter(country=country)
+
+        if self.country:
+            country = get_object_or_404(Country, pk=self.country)
+            queryset = self.model.objects.filter(country=country)
+        else:
+            queryset = self.model.objects.all()
         return queryset
 
     def list(self, request, *args, **kwargs):
         # Validation code to check for `country` param should be here
-        country = self.request.GET.get("country")
+        self.country = self.request.GET.get("country")
 
-        self.country = Hasher.to_object_pk(country)
+        #self.country = Hasher.to_object_pk(self.country)
         queryset = self.get_queryset()
 
         serializer = self.serializer_class(queryset, many=True)
