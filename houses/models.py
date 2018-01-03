@@ -15,7 +15,7 @@ class HashableModel(models.Model):
 
 class Country(HashableModel):
     """Represent a country in which the house is positioned."""
-    name = models.CharField(max_length=30)
+    name = models.CharField(max_length=128)
 
     def __unicode__(self):
         return self.name
